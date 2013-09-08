@@ -115,6 +115,9 @@ public class VarastoTest {
         double saatu = varasto.otaVarastosta(3);
         assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
         assertEquals(2, saatu, vertailuTarkkuus);
+        
+        // Intentional error
+        assertEquals(3829, saatu, vertailuTarkkuus);
     }
     
     
