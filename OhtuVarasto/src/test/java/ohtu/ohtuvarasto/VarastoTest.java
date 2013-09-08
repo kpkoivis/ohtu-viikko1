@@ -66,6 +66,60 @@ public class VarastoTest {
     }
 
     @Test
+    public void negatiivisenLisääminenEiVaikutaVarastoSaldoon() {
+        
+        varasto.lisaaVarastoon(-1);
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+        varasto.lisaaVarastoon(8);
+        assertEquals(8, varasto.getSaldo(), vertailuTarkkuus);
+        varasto.lisaaVarastoon(-1);
+        assertEquals(8, varasto.getSaldo(), vertailuTarkkuus);
+        varasto.lisaaVarastoon(-8);
+        assertEquals(8, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void josLisääYliTilavuudenNiinYlimääräinenMeneeHukkaan() {
+        
+        varasto.lisaaVarastoon(10);
+        assertEquals(10, varasto.getSaldo(), vertailuTarkkuus);
+        varasto.lisaaVarastoon(1);
+        assertEquals(10, varasto.getSaldo(), vertailuTarkkuus);
+        
+        varasto.otaVarastosta(9);
+        assertEquals(1, varasto.getSaldo(), vertailuTarkkuus);
+        
+        varasto.lisaaVarastoon(10);
+        assertEquals(10, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void negativiivistaEiVoiOttaa() {
+        double otettu = varasto.otaVarastosta(-1);
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+        assertEquals(0, otettu, vertailuTarkkuus);
+        
+        varasto.lisaaVarastoon(10);
+        assertEquals(10, varasto.getSaldo(), vertailuTarkkuus);
+
+        otettu = varasto.otaVarastosta(-9);
+        assertEquals(10, varasto.getSaldo(), vertailuTarkkuus);
+        assertEquals(0, otettu, vertailuTarkkuus);
+    }
+
+    @Test
+    public void josHaluaaEnemmänKuinOnNiinSaaVainNiinPaljonKuinOn() {       
+        varasto.lisaaVarastoon(2);
+        assertEquals(2, varasto.getSaldo(), vertailuTarkkuus);
+
+        double saatu = varasto.otaVarastosta(3);
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+        assertEquals(2, saatu, vertailuTarkkuus);
+    }
+    
+    
+        
+    @Test
     public void konstr() {
         varasto = new Varasto(-1);
         varasto = new Varasto(0);
